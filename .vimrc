@@ -16,3 +16,6 @@ map <F8> :tabn <Enter>
 
 autocmd FileType make setlocal noexpandtab
 autocmd FileType go setlocal noexpandtab
+
+let g:clang_snippets = 1
+let g:clang_snippets_engine = 'clang_complete'
