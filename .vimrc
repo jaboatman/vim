@@ -13,6 +13,8 @@ set nu
 
 let mapleader = ','
 
+nore <leader>r <ESC>:NERDTree<CR>
+
 map <F7> :tabp <Enter>
 map <F8> :tabn <Enter>
 
@@ -57,3 +59,6 @@ let g:clang_user_options = '-std=c++11'
 
 autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+
+
+let NERDTreeIgnore=['\.o$', '\.gcda$', '\.gcno$']
