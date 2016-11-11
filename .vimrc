@@ -15,6 +15,8 @@ let mapleader = ','
 
 nore <leader>r <ESC>:NERDTree<CR>
 
+let g:nerdtree_tabs_open_on_console_startup=1
+
 map <F7> :tabp <Enter>
 map <F8> :tabn <Enter>
 
