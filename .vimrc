@@ -58,6 +58,8 @@ let g:clang_snippets_engine = 'clang_complete'
 let g:clang_use_library = 1
 let g:clang_close_preview = 1
 let g:clang_user_options = '-std=c++11'
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
