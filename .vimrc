@@ -52,44 +52,14 @@ map = <C-W>+
 map _ <C-W><
 map + <C-W>>
 
-function! GetUnixSeconds()
-  let t = system("date +%s")
-  return strpart(t, 0, strlen(t)-1)
-endfunction
+autocmd FileType make,go setlocal noexpandtab
 
-function GetMkSessionName()
-  let t = GetUnixSeconds()
-  return ".vimsession" . t . ".vim"
-endfunction
-
-function CreateVimSession()
-  let t = GetMkSessionName()
-  execute "mksession " . t
-endfunction
-
-function LoadSession()
-  let f = split(globpath('.', '.vimsession*'), '\n')
-  call map(f, strpart('(v:val)', strlen('.vimsession'), strlen('(v:val)') - strlen('.vimsession')))
-  echo f
-endfunction
-
-map <F5> :call CreateVimSession() <Enter>
-  
-
-autocmd FileType make setlocal noexpandtab
-autocmd FileType go setlocal noexpandtab
-
-"let g:clang_snippets = 1
-"let g:clang_snippets_engine = 'clang_complete'
-"let g:clang_use_library = 1
-"let g:clang_close_preview = 1
-"let g:clang_user_options = '-std=c++11'
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_global_default.py'
 let g:ycm_confirm_extra_conf = 0
 
 let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.16.0-src/src'
 
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+" autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
