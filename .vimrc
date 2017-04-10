@@ -1,4 +1,30 @@
-execute pathogen#infect()
+" execute pathogen#infect()
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" Plugins
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'tpope/vim-sensible'
+Plugin 'flazz/vim-colorschemes'
+" :PluginInstall
+Plugin 'JuliaEditorSupport/julia-vim'
+" Do this from vim? Or in here?
+" :PluginInstall!
+Plugin 'scrooloose/nerdtree'
+" Bundle 'jistr/vim-nerdtree-tabs'
+Plugin 'jistr/vim-nerdtree-tabs'
+
+Plugin 'mkitt/tabline.vim'
+
+Plugin 'rust-lang/rust.vim'
+
+Plugin 'Valloric/YouCompleteMe'
+
+
+
+call vundle#end()
 syntax on
 filetype plugin indent on
 set t_Co=256
@@ -53,11 +79,16 @@ map <F5> :call CreateVimSession() <Enter>
 autocmd FileType make setlocal noexpandtab
 autocmd FileType go setlocal noexpandtab
 
-let g:clang_snippets = 1
-let g:clang_snippets_engine = 'clang_complete'
-let g:clang_use_library = 1
-let g:clang_close_preview = 1
-let g:clang_user_options = '-std=c++11'
+"let g:clang_snippets = 1
+"let g:clang_snippets_engine = 'clang_complete'
+"let g:clang_use_library = 1
+"let g:clang_close_preview = 1
+"let g:clang_user_options = '-std=c++11'
+let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_global_default.py'
+let g:ycm_confirm_extra_conf = 0
+
+let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.16.0-src/src'
+
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
@@ -66,3 +97,6 @@ autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
 
 
 let NERDTreeIgnore=['\.o$', '\.gcda$', '\.gcno$']
+  
+autocmd BufNewFile,BufRead *.rs set filetype=rust
+

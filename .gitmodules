@@ -1,30 +1,3 @@
-[submodule "bundle/colorschemes"]
-	path = bundle/colorschemes
-	url = https://github.com/flazz/vim-colorschemes.git
-[submodule "bundle/vim-sensible"]
-	path = bundle/vim-sensible
-	url = https://github.com/tpope/vim-sensible.git
-[submodule "bundle/clang_complete"]
-	path = bundle/clang_complete
-	url = https://github.com/Rip-Rip/clang_complete.git
-[submodule "bundle/julia-vim"]
-	path = bundle/julia-vim
-	url = https://github.com/JuliaLang/julia-vim.git
-[submodule "bundle/vim-go"]
-	path = bundle/vim-go
-	url = https://github.com/fatih/vim-go.git
-[submodule "bundle/clang-format"]
-	path = bundle/clang-format
-	url = https://github.com/rhysd/vim-clang-format
-[submodule "bundle/nerdtree"]
-	path = bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
-[submodule "bundle/nerdtree-tabs"]
-	path = bundle/nerdtree-tabs
-	url = https://github.com/jistr/vim-nerdtree-tabs.git
-[submodule "bundle/rust.vim"]
-	path = bundle/rust.vim
-	url = https://github.com/rust-lang/rust.vim
-[submodule "bundle/tabline"]
-	path = bundle/tabline
-	url = git://github.com/mkitt/tabline.vim.git
+[submodule "bundle/Vundle.vim"]
+	path = bundle/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git
