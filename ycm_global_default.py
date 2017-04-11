@@ -70,7 +70,7 @@ def GetCompilationInfoForFile(database, filename):
         return None
     return database.GetCompilationInfoForFile(filename)
 
-def FindNearest(path, target, build_folder):  
+def FindNearest(path, target, build_folder = './'):  
     candidate = os.path.join(path, target)
     if(os.path.isfile(candidate) or os.path.isdir(candidate)):
         logging.info("Found nearest " + target + " at " + candidate)
@@ -121,8 +121,10 @@ def FlagsForClangComplete(root):
     try:
         clang_complete_path = FindNearest(root, '.clang_complete')
         clang_complete_flags = open(clang_complete_path, 'r').read().splitlines()
+        logging.info("Found clang complete file: " + clang_complete_path)
         return clang_complete_flags
-    except:
+    except Exception as e:
+        logging.info("Failed to read .clang_complete: " + e.message)
         return None
 
 def FlagsForInclude(root):  
