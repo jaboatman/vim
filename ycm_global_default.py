@@ -122,7 +122,10 @@ def FlagsForClangComplete(root):
         clang_complete_path = FindNearest(root, '.clang_complete')
         clang_complete_flags = open(clang_complete_path, 'r').read().splitlines()
         logging.info("Found clang complete file: " + clang_complete_path)
-        return clang_complete_flags
+        # Strip off the '.clang_complete' part at the end of the path variable.
+        return MakeRelativePathsInFlagsAbsolute(
+                clang_complete_flags,
+                clang_complete_path[0:-len('.clang_complete')])
     except Exception as e:
         logging.info("Failed to read .clang_complete: " + e.message)
         return None

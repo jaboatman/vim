@@ -69,4 +69,5 @@ autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
 let NERDTreeIgnore=['\.o$', '\.gcda$', '\.gcno$']
   
 autocmd BufNewFile,BufRead *.rs set filetype=rust
+autocmd BufNewFile,BufRead *.jl set filetype=julia
 
