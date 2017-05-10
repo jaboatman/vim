@@ -36,10 +36,11 @@ set cindent
 set expandtab
 set cc=100
 set nu
+set ttyfast
 
 let mapleader = ','
 
-nore <leader>r <ESC>:NERDTree<CR>
+nore <leader>r <ESC>:NERDTreeTabsToggle<CR>
 
 let g:nerdtree_tabs_open_on_console_startup=1
 
