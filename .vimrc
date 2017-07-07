@@ -58,7 +58,14 @@ autocmd FileType make,go setlocal noexpandtab
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_global_default.py'
 let g:ycm_confirm_extra_conf = 0
 
-let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.16.0-src/src'
+" TODO Can run `rustc --print sysroot` to determine
+" the first 5 levels of this path, which include all
+" system dependent information.
+" Needed to run `rustup component add rust-src` to get this
+" source code initially. I believe `rustup update` will keep
+" it up to date properly.
+let g:ycm_rust_src_path = '/home/jason/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
+let g:rustfmt_autosave = 1
 
 " autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
