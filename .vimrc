@@ -8,7 +8,10 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'tpope/vim-sensible'
+if !has('nvim')
+  Plugin 'tpope/vim-sensible'
+endif
+
 Plugin 'flazz/vim-colorschemes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -16,6 +19,7 @@ Plugin 'mkitt/tabline.vim'
 
 Plugin 'JuliaEditorSupport/julia-vim'
 Plugin 'rust-lang/rust.vim'
+Plugin 'cespare/vim-toml'
 
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-syntastic/syntastic'
@@ -72,6 +76,10 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+let g:ycm_filetype_specific_completion_to_disable = {
+      \ 'gitcommit': 1
+      \}
+
 " rustc checker enabled
 " Fix for issue with using rustc instead of cargo check:
 " https://github.com/rust-lang/rust.vim/issues/130
@@ -91,3 +99,7 @@ autocmd FileType make,go setlocal noexpandtab
 autocmd BufNewFile,BufRead *.rs set filetype=rust
 autocmd BufNewFile,BufRead *.jl set filetype=julia
 
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
