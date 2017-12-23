@@ -11,11 +11,14 @@ Plugin 'VundleVim/Vundle.vim'
 if !has('nvim')
   Plugin 'tpope/vim-sensible'
 endif
+Plugin 'tpope/vim-fugitive'
 
 Plugin 'flazz/vim-colorschemes'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'mkitt/tabline.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 Plugin 'JuliaEditorSupport/julia-vim'
 Plugin 'rust-lang/rust.vim'
@@ -24,6 +27,8 @@ Plugin 'cespare/vim-toml'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-syntastic/syntastic'
 
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 call vundle#end()
 syntax on
@@ -45,11 +50,13 @@ nore <leader>r <ESC>:NERDTreeTabsToggle<CR>
 map <F7> :tabp <Enter>
 map <F8> :tabn <Enter>
 
-map - <C-W>-
-map = <C-W>+
+" map - <C-W>-
+" map = <C-W>+
+" 
+" map _ <C-W><
+" map + <C-W>>
 
-map _ <C-W><
-map + <C-W>>
+" let g:airline#extensions#tabline#enabled = 1
 
 let g:nerdtree_tabs_open_on_console_startup=1
 let NERDTreeIgnore=['\.o$', '\.gcda$', '\.gcno$']
@@ -83,10 +90,13 @@ let g:ycm_filetype_specific_completion_to_disable = {
 " rustc checker enabled
 " Fix for issue with using rustc instead of cargo check:
 " https://github.com/rust-lang/rust.vim/issues/130
-let g:syntastic_rust_rustc_exe = 'cargo check'
+let g:syntastic_rust_rustc_exe = 'rustup run nightly cargo clippy'
 let g:syntastic_rust_rustc_fname = ''
-let g:syntastic_rust_rustc_args = '--'
+let g:syntastic_rust_rustc_args = ''
 let g:syntastic_rust_checkers = ['rustc']
+
+" fzf and rg integration
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 " autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
