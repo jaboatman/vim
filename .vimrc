@@ -88,8 +88,8 @@ call neomake#configure#automake('w')
 " it up to date properly.
 " let g:ycm_rust_src_path = '/home/jason/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
 let g:rustfmt_autosave = 1
-" Mysteriously stopped working? No errors?
-" let g:rustfmt_command = 'rustup run nightly rustfmt'
+let g:rustfmt_command = 'rustup run nightly rustfmt'
+let g:rustfmt_emit_files = 1
 
 " let g:ycm_filetype_specific_completion_to_disable = {
 "       \ 'gitcommit': 1
