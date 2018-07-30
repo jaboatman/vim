@@ -18,10 +18,20 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 
-Plug 'roxma/nvim-completion-manager'
-Plug 'racer-rust/vim-racer'
-Plug 'roxma/nvim-cm-racer'
-Plug 'roxma/ncm-clang'
+" Plug 'roxma/nvim-completion-manager'
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'SirVer/ultisnips'
+
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-bufword'
+
+Plug 'ncm2/ncm2-racer'
+Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-pyclang'
+Plug 'ncm2/ncm2-go'
 
 Plug 'neomake/neomake'
 " Plug 'Valloric/YouCompleteMe'
@@ -59,18 +69,30 @@ autocmd BufWritePost *.rs Neomake! clippy
 let g:nerdtree_tabs_open_on_console_startup=1
 let NERDTreeIgnore=['\.o$', '\.gcda$', '\.gcno$']
 
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#enable_smart_case = 1
+" ncm2
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+set shortmess+=c
 
-" set sources
-" call deoplete#custom#source('rust', 'LanguageClient')
-" let g:deoplete#sources = {}
-" let g:deoplete#sources.cpp = ['LanguageClient']
-" let g:deoplete#sources.python = ['LanguageClient']
-" let g:deoplete#sources.python3 = ['LanguageClient']
-" let g:deoplete#sources.rust = ['LanguageClient']
-" let g:deoplete#sources.c = ['LanguageClient']
-" let g:deoplete#sources.vim = ['vim']
+" TODO Verify
+let g:ncm2_pyclang#library_path = '/usr/lib/llvm-3.8/lib/libclang-3.8.so.1'
+" TODO Consider
+" autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
+let g:ncm2_pyclang#database_path = [
+            \ 'compile_commands.json',
+            \ 'build/compile_commands.json'
+            \ ]
+" Snips
+" Press enter key to trigger snippet expansion
+" The parameters are the same as `:help feedkeys()`
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" c-j c-k for moving in snippet
+" let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
+
 let g:cm_matcher={'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
 
 let g:neomake_rust_enabled_makers = ['clippy']
