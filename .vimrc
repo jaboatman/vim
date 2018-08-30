@@ -31,7 +31,7 @@ Plug 'ncm2/ncm2-jedi'
 Plug 'ncm2/ncm2-pyclang'
 Plug 'ncm2/ncm2-go'
 
-Plug 'neomake/neomake'
+Plug 'neomake/neomake', { 'commit': '5aeebff' }
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': './install.sh'
@@ -89,15 +89,8 @@ let g:neomake_rust_enabled_makers = ['clippy']
 let g:neomake_open_list = 2
 call neomake#configure#automake('w')
 
-" TODO Can run `rustc --print sysroot` to determine
-" the first 5 levels of this path, which include all
-" system dependent information.
-" Needed to run `rustup component add rust-src` to get this
-" source code initially. I believe `rustup update` will keep
-" it up to date properly.
-" let g:ycm_rust_src_path = '/home/jason/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src'
 let g:rustfmt_autosave = 1
-let g:rustfmt_command = 'rustup run nightly rustfmt'
+" let g:rustfmt_command = 'rustup run nightly rustfmt'
 let g:rustfmt_emit_files = 1
 
 let g:LanguageClient_serverCommands = {
