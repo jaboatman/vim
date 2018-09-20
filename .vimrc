@@ -8,11 +8,12 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
 Plug 'flazz/vim-colorschemes'
+Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'mkitt/tabline.vim'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline-themes'
 
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'rust-lang/rust.vim'
@@ -42,8 +43,11 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 call plug#end()
 
-set t_Co=256
-colorscheme molokai
+" set t_Co=256
+let g:gruvbox_italic=1
+set termguicolors
+set background=dark
+colorscheme gruvbox
 set autoindent
 set tabstop=2
 set shiftwidth=2
