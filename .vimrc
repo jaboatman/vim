@@ -29,7 +29,7 @@ Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-bufword'
 
 Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-pyclang'
+" Plug 'ncm2/ncm2-pyclang'
 Plug 'ncm2/ncm2-go'
 
 Plug 'neomake/neomake', { 'commit': '5aeebff' }
@@ -99,6 +99,8 @@ let g:rustfmt_emit_files = 1
 
 let g:LanguageClient_serverCommands = {
         \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+        \ 'cpp': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+        \ 'c': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
         \ }
 
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
