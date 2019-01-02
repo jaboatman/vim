@@ -34,10 +34,13 @@ Plug 'ncm2/ncm2-go'
 
 Plug 'neomake/neomake', { 'commit': '5aeebff' }
 Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': './install.sh'
-    \ }
-
+   \ 'branch': 'next',
+   \ 'do': './install.sh'
+   \ }
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'commit': '61e4ed3',
+"     \ 'do': './install.sh'
+"     \ }
 
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
@@ -94,7 +97,7 @@ let g:neomake_open_list = 2
 call neomake#configure#automake('w')
 
 let g:rustfmt_autosave = 1
-" let g:rustfmt_command = 'rustup run nightly rustfmt'
+let g:rustfmt_command = 'rustup run stable rustfmt'
 let g:rustfmt_emit_files = 1
 
 let g:LanguageClient_serverCommands = {
@@ -103,6 +106,7 @@ let g:LanguageClient_serverCommands = {
         \ 'c': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
         \ }
 
+let g:LanguageClient_loggingLevel = 'DEBUG'
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition({
       \ 'gotoCmd': 'tabe',
@@ -121,3 +125,15 @@ augroup my_neomake_qf
     autocmd!
     autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
 augroup END
+
+
+" " Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+
+" " Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
