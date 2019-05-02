@@ -4,6 +4,16 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+function! BuildComposer(info)
+  if a:info.status != 'unchanged' || a:info.force
+    if has('nvim')
+      !cargo build --release
+    else
+      !cargo build --release --no-default-features --features json-rpc
+    endif
+  endif
+endfunction
+
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
@@ -18,6 +28,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
+Plug 'derekwyatt/vim-scala'
 
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
@@ -32,7 +43,8 @@ Plug 'ncm2/ncm2-jedi'
 " Plug 'ncm2/ncm2-pyclang'
 Plug 'ncm2/ncm2-go'
 
-Plug 'neomake/neomake', { 'commit': '5aeebff' }
+Plug 'neomake/neomake' " , { 'commit': '5aeebff' }
+"    \ 'commit': '8c029c9',
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': './install.sh'
@@ -41,6 +53,9 @@ Plug 'autozimu/LanguageClient-neovim', {
 
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+
+Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+
 call plug#end()
 
 " set t_Co=256
@@ -88,6 +103,7 @@ inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:LanguageClient_hasSnippetSupport = 1
 
 let g:neomake_rust_enabled_makers = ['clippy']
 let g:neomake_open_list = 2
@@ -97,10 +113,12 @@ let g:rustfmt_autosave = 1
 " let g:rustfmt_command = 'rustup run nightly rustfmt'
 let g:rustfmt_emit_files = 1
 
+let g:default_julia_version = '1.1.0'
+
 let g:LanguageClient_serverCommands = {
         \ 'rust': ['rustup', 'run', 'stable', 'rls'],
         \ 'cpp': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
-        \ 'c': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+        \ 'c': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log']
         \ }
 
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
@@ -108,6 +126,7 @@ nnoremap <silent> gd :call LanguageClient#textDocument_definition({
       \ 'gotoCmd': 'tabe',
       \ })<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+nnoremap <localleader>t :EnType<CR>
 
 " fzf and rg integration
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
@@ -121,3 +140,7 @@ augroup my_neomake_qf
     autocmd!
     autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
 augroup END
+
+" markdown composer
+" Don't automatically open the browser window.
+let g:markdown_composer_open_browser = 0
