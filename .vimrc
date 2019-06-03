@@ -121,7 +121,8 @@ let g:default_julia_version = '1.1.0'
 let g:LanguageClient_serverCommands = {
         \ 'rust': ['rustup', 'run', 'stable', 'rls'],
         \ 'cpp': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
-        \ 'c': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log']
+        \ 'c': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
+        \ 'go': ['go-langserver']
         \ }
 
 let g:LanguageClient_loggingLevel = 'DEBUG'
