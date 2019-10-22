@@ -32,28 +32,7 @@ Plug 'derekwyatt/vim-scala'
 
 Plug 'SirVer/ultisnips'
 
-" Plug 'ncm2/ncm2'
-" Plug 'roxma/nvim-yarp'
-
-" Plug 'ncm2/ncm2-ultisnips'
-
-" Plug 'ncm2/ncm2-tmux'
-" Plug 'ncm2/ncm2-bufword'
-
-" Plug 'ncm2/ncm2-jedi'
-" Plug 'ncm2/ncm2-pyclang'
-" Plug 'ncm2/ncm2-go'
-
 Plug 'neomake/neomake' " , { 'commit': '5aeebff' }
-"    \ 'commit': '8c029c9',
-" Plug 'autozimu/LanguageClient-neovim', {
-"    \ 'branch': 'next',
-"    \ 'do': './install.sh'
-"    \ }
-" Plug 'autozimu/LanguageClient-neovim', {
-"     \ 'commit': '61e4ed3',
-"     \ 'do': './install.sh'
-"     \ }
 
 " Use release branch
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -72,6 +51,7 @@ call plug#end()
 let g:gruvbox_italic=1
 set termguicolors
 set background=dark
+" let g:gruvbox_contrast_dark='soft'
 colorscheme gruvbox
 set autoindent
 set tabstop=2
