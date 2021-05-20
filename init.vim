@@ -1,1 +1,1 @@
-/home/jason/.vimrc
+.vimrc
