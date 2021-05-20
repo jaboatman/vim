@@ -28,11 +28,12 @@ Plug 'vim-airline/vim-airline'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
+Plug 'mhinz/vim-crates'
 Plug 'derekwyatt/vim-scala'
 
 Plug 'SirVer/ultisnips'
 
-Plug 'neomake/neomake' " , { 'commit': '5aeebff' }
+" Plug 'neomake/neomake' " , { 'commit': '5aeebff' }
 
 " Use release branch
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -65,13 +66,11 @@ set ttyfast
 let mapleader = ','
 nore <leader>r <ESC>:NERDTreeTabsToggle<CR>
 autocmd BufReadPost *.rs set filetype=rust
-autocmd BufWritePost *.rs Neomake! clippy
+" autocmd BufWritePost *.rs Neomake! clippy
 
 let g:nerdtree_tabs_open_on_console_startup=1
 let NERDTreeIgnore=['\.o$', '\.gcda$', '\.gcno$']
 
-" coc.vim
-let g:coc_node_path = "/home/jason/tools/third-party/node-v10.16.0-linux-x64/bin/node"
 set hidden
 set nobackup
 set nowritebackup
@@ -82,6 +81,13 @@ set updatetime=300
 set shortmess+=c
 
 set signcolumn=yes
+
+" Spell checking.
+set spelllang=en
+augroup spellCheck
+  autocmd!
+  autocmd BufReadPost,BufNewFile *.txt,*.md setlocal spell
+augroup END
 
 inoremap <silent><expr> <c-space> coc#refresh()
 
@@ -99,6 +105,8 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+nmap <leader>ac <Plug>(coc-codeaction)
+
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -106,7 +114,7 @@ function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
   endif
 endfunction
 
@@ -120,23 +128,16 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
-" ncm2
-" autocmd BufEnter * call ncm2#enable_for_buffer()
-" set completeopt=noinsert,menuone,noselect
-" set shortmess+=c
 
-" let g:ncm2_pyclang#library_path = '/usr/lib/llvm-6.0/lib/libclang-6.0.so.1'
-" TODO Consider
-" autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
-" let g:ncm2_pyclang#database_path = [
-"             \ 'compile_commands.json',
-"             \ 'build/compile_commands.json'
-"             \ ]
-" let g:ncm2#matcher = 'substrfuzzy'
-" Snips
-" Press enter key to trigger snippet expansion
-" The parameters are the same as `:help feedkeys()`
-" inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
 " c-j c-k for moving in snippet
 " let g:UltiSnipsExpandTrigger		= "<Plug>(ultisnips_expand)"
@@ -145,31 +146,15 @@ let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 let g:LanguageClient_hasSnippetSupport = 1
 
-let g:neomake_rust_enabled_makers = ['clippy']
-let g:neomake_open_list = 2
-call neomake#configure#automake('w')
+" let g:neomake_rust_enabled_makers = ['clippy']
+" let g:neomake_open_list = 2
+" call neomake#configure#automake('w')
 
 let g:rustfmt_autosave = 1
 let g:rustfmt_command = 'rustup run stable rustfmt'
 let g:rustfmt_emit_files = 1
 
-let g:default_julia_version = '1.1.0'
-
-" let g:LanguageClient_serverCommands = {
-"         \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-"         \ 'cpp': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
-"         \ 'c': ['~/tools/third-party/ccls/Release/ccls', '--log-file=/tmp/cc.log'],
-"         \ 'python': ['pyls'],
-"         \ 'go': ['go-langserver']
-"         \ }
-
-" let g:LanguageClient_loggingLevel = 'DEBUG'
-" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition({
-"       \ 'gotoCmd': 'tabe',
-"       \ })<CR>
-" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-" nnoremap <localleader>t :EnType<CR>
+let g:default_julia_version = '1.4.1'
 
 " fzf and rg integration
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
@@ -179,10 +164,10 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 autocmd FileType make,go setlocal noexpandtab
 autocmd BufNewFile,BufReadPost *.jl set filetype=julia
 
-augroup my_neomake_qf
-    autocmd!
-    autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
-augroup END
+" augroup my_neomake_qf
+"     autocmd!
+"     autocmd QuitPre * if &filetype !=# 'qf' | lclose | endif
+" augroup END
 
 " markdown composer
 " Don't automatically open the browser window.
@@ -198,3 +183,8 @@ nnoremap <leader>p "+p
 nnoremap <leader>P "+P
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
+
+" crates.io support.
+if has('nvim')
+  autocmd BufRead Cargo.toml call crates#toggle()
+endif
