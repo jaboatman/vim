@@ -248,7 +248,7 @@ let g:rustfmt_emit_files = 1
 let g:default_julia_version = '1.4.1'
 
 " fzf and rg integration
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+" command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 " Tell FZF to use RG - so we can skip .gitignore files even if not using
@@ -257,8 +257,17 @@ let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 nmap <leader>o :Files<cr>
 nnoremap <silent><nowait> <space>o :Files<cr>
 nnoremap <silent><nowait> <space>b :Buffers<cr>
-nnoremap <silent><nowait> <space>/ :Lines<cr>
 
+" Command taken from here: https://github.com/chengzeyi/fzf-preview.vim/blob/master/plugin/fzf-preview.vim
+" It might make sense to just use this plugin instead.
+command! -bang -nargs=? BLines
+    \ call fzf#vim#buffer_lines(<q-args>, 
+    \                          fzf#vim#with_preview({ "placeholder": 
+    \                                fzf#shellescape(expand('%')),
+    \                                'options': '--preview-window +{1}-/2'
+    \ }), <bang>0)
+
+nnoremap <silent><nowait> <space>/ :BLines<cr>
 
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 autocmd FileType make,go setlocal noexpandtab
