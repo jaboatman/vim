@@ -3,5 +3,8 @@
   "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.cargo.allFeatures": false,
   "rust-analyzer.checkOnSave.allFeatures": false,
-  "rust-analyzer.diagnostics.disabled": ["unresolved-proc-macro"]
+  "rust-analyzer.diagnostics.disabled": ["unresolved-macro-call", "unresolved-proc-macro"],
+  "yaml.schemas": {
+    "/home/jason/grokit/uc/datafi/schema/datafi_schema.json": ["/*df.yml"]
+  }
 }
