@@ -92,7 +92,6 @@ return require('packer').startup(function()
         'fzf'
       },
       sections = {
-        -- lualine_c = { "diagnostics", sources = {'coc'}},
         lualine_b = {
           {'branch', fmt = function(str)
             local l = string.len(str)
@@ -101,7 +100,13 @@ return require('packer').startup(function()
           },
           'diff',
           {'diagnostics', sources={'nvim_lsp', 'coc'}}},
-        lualine_c = {'filename', 'coc#status'},
+        lualine_c = {
+          {
+            'filename', 
+            path = 1
+          },
+          'coc#status'
+        },
         -- lualine_c = { 'mode', { 'diagnostics', sources = {'coc'}}}
       },
       inactive_sections = {
