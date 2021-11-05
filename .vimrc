@@ -14,21 +14,16 @@ function! BuildComposer(info)
   endif
 endfunction
 
+set guifont=HackNerdFontMono
+
 
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
 Plug 'flazz/vim-colorschemes'
 Plug 'morhetz/gruvbox'
-" Plug 'scrooloose/nerdtree'
-" Plug 'ms-jpq/chadtree'
-" Plug 'kyazdani42/nvim-web-devicons' " for file icons
-" Plug 'kyazdani42/nvim-tree.lua'
-" Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
-" Plug 'jistr/vim-nerdtree-tabs'
+" TODO Remove this one in favor of something better.
 Plug 'mkitt/tabline.vim'
-Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
 
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'rust-lang/rust.vim'
@@ -37,8 +32,6 @@ Plug 'mhinz/vim-crates'
 Plug 'derekwyatt/vim-scala'
 
 Plug 'SirVer/ultisnips'
-
-" Plug 'neomake/neomake' " , { 'commit': '5aeebff' }
 
 " Use release branch
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -156,8 +149,8 @@ set termguicolors " this variable must be enabled for colors to be applied prope
 " a list of groups can be found at `:help nvim_tree_highlight`
 " highlight NvimTreeFolderIcon guibg=blue
 
-
 lua require('plugins')
+lua require('lualine').setup()
 
 augroup packer_user_config
   autocmd!
@@ -292,3 +285,5 @@ vnoremap <leader>P "+P
 if has('nvim')
   autocmd BufRead Cargo.toml call crates#toggle()
 endif
+
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}

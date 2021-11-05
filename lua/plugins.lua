@@ -1,4 +1,5 @@
 return require('packer').startup(function()
+  -- File explorer via nvim-tree.
   use {
       'kyazdani42/nvim-tree.lua',
       requires = 'kyazdani42/nvim-web-devicons',
@@ -77,6 +78,36 @@ return require('packer').startup(function()
           }
         }
       } end
+  }
+  -- Status line via lualine.
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true},
+    require'lualine'.setup {
+      options = {
+        theme = 'gruvbox'
+      },
+      extensions = {
+        'nvim-tree',
+        'fzf'
+      },
+      sections = {
+        -- lualine_c = { "diagnostics", sources = {'coc'}},
+        lualine_b = {
+          {'branch', fmt = function(str)
+            local l = string.len(str)
+            return (l > 24 and '\u{2026}' .. str:sub(l - 24, l) or str)
+          end
+          },
+          'diff',
+          {'diagnostics', sources={'nvim_lsp', 'coc'}}},
+        lualine_c = {'filename', 'coc#status'},
+        -- lualine_c = { 'mode', { 'diagnostics', sources = {'coc'}}}
+      },
+      inactive_sections = {
+        lualine_c = {'filename'}
+      }
+    }
   }
 end)
 
