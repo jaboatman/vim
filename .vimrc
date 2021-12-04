@@ -248,8 +248,9 @@ let g:fzf_buffers_jump = 1
 " :GitFiles search
 let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 nmap <leader>o :Files<cr>
-nnoremap <silent><nowait> <space>o :Files<cr>
-nnoremap <silent><nowait> <space>b :Buffers<cr>
+nnoremap <silent><nowait> <space>o :FzfLua files<cr>
+nnoremap <silent><nowait> <space>b :FzfLua buffers<cr>
+nnoremap <nowait> <space>s :FzfLua grep<cr>
 
 " Command taken from here: https://github.com/chengzeyi/fzf-preview.vim/blob/master/plugin/fzf-preview.vim
 " It might make sense to just use this plugin instead.

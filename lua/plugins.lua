@@ -110,9 +110,62 @@ return require('packer').startup(function()
         -- lualine_c = { 'mode', { 'diagnostics', sources = {'coc'}}}
       },
       inactive_sections = {
-        lualine_c = {'filename'}
-      }
+        lualine_c = {{'filename', path = 1}}
+      },
+      -- tabline = {
+      --   lualine_a = {"buffers"},
+      --   lualine_z = {"tabs"}
+      -- }
     }
   }
+  -- tabline
+  -- use {
+  --   'kdheepak/tabline.nvim',
+  --   config = function()
+  --     require'tabline'.setup {
+  --       -- Defaults configuration options
+  --       enable = true,
+  --       options = {
+  --       -- If lualine is installed tabline will use separators configured in lualine by default.
+  --       -- These options can be used to override those settings.
+  --         section_separators = {'', ''},
+  --         component_separators = {'', ''},
+  --         max_bufferline_percent = 66, -- set to nil by default, and it uses vim.o.columns * 2/3
+  --         show_tabs_always = false, -- this shows tabs only when there are more than one tab or if the first tab is named
+  --         show_devicons = true, -- this shows devicons in buffer section
+  --         show_bufnr = false, -- this appends [bufnr] to buffer section,
+  --         show_filename_only = false, -- shows base filename only instead of relative path in filename
+  --       }
+  --     }
+  --     vim.cmd[[
+  --       set guioptions-=e " Use showtabline in gui vim
+  --       set sessionoptions+=tabpages,globals " store tabpages and globals in session
+  --     ]]
+  --   end,
+  --   requires = { { 'hoob3rt/lualine.nvim', opt=true }, {'kyazdani42/nvim-web-devicons', opt = true} }
+  -- }
+  -- lua fzf
+  use {
+    'ibhagwan/fzf-lua',
+    requires = {
+      'vijaymarupudi/nvim-fzf',
+      'kyazdani42/nvim-web-devicons'
+    },
+    config = function()
+      require'fzf-lua'.setup {
+        previewers = {
+          builtin = {
+            delay = 0
+          }
+        }
+      }
+    end
+  }
+  -- TODO See if we can configure this better, it doesn't work well with FzfLua, and
+  -- I'm not a fan of the row highlighting that happens.
+  -- use {
+  --   "beauwilliams/focus.nvim",
+  --   config = function() require("focus").setup() end 
+  -- }
 end)
 
