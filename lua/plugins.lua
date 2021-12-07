@@ -1,3 +1,4 @@
+-- nvim_tree_hide_dotfiles
 return require('packer').startup(function()
   -- File explorer via nvim-tree.
   use {
@@ -57,7 +58,20 @@ return require('packer').startup(function()
           -- the command arguments as a list
           args = {}
         },
-
+        -- filters
+        filters = {
+          dotfiles = false,
+          custom = {
+            '.git',
+            'node_modules',
+            '.cache'
+          }
+        },
+        git = {
+          enable = true,
+          ignore = true,
+          timeout = 500,
+        },
         view = {
           -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
           width = 30,
