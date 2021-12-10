@@ -113,7 +113,7 @@ return require('packer').startup(function()
           end
           },
           'diff',
-          {'diagnostics', sources={'nvim_lsp', 'coc'}}},
+          {'diagnostics', sources={'nvim_diagnostic', 'coc'}}},
         lualine_c = {
           {
             'filename', 
