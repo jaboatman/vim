@@ -1,5 +1,6 @@
 -- nvim_tree_hide_dotfiles
 return require('packer').startup(function()
+  use 'wbthomason/packer.nvim'
   -- File explorer via nvim-tree.
   use {
       'kyazdani42/nvim-tree.lua',
@@ -97,7 +98,8 @@ return require('packer').startup(function()
   use {
     'nvim-lualine/lualine.nvim',
     requires = {'kyazdani42/nvim-web-devicons', opt = true},
-    require'lualine'.setup {
+    config = function()
+      require'lualine'.setup {
       options = {
         theme = 'gruvbox'
       },
@@ -126,11 +128,11 @@ return require('packer').startup(function()
       inactive_sections = {
         lualine_c = {{'filename', path = 1}}
       },
-      -- tabline = {
-      --   lualine_a = {"buffers"},
-      --   lualine_z = {"tabs"}
-      -- }
-    }
+      tabline = {
+        lualine_a = {"buffers"},
+        lualine_z = {"tabs"}
+      }
+    } end
   }
   -- tabline
   -- use {
