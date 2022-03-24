@@ -128,10 +128,10 @@ return require('packer').startup(function()
       inactive_sections = {
         lualine_c = {{'filename', path = 1}}
       },
-      tabline = {
-        lualine_a = {"buffers"},
-        lualine_z = {"tabs"}
-      }
+      -- tabline = {
+      --   lualine_a = {"buffers"},
+      --   lualine_z = {"tabs"}
+      -- }
     } end
   }
   -- tabline
@@ -177,6 +177,7 @@ return require('packer').startup(function()
       }
     end
   }
+  use 'ggandor/lightspeed.nvim'
   -- TODO See if we can configure this better, it doesn't work well with FzfLua, and
   -- I'm not a fan of the row highlighting that happens.
   -- use {

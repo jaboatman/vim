@@ -41,7 +41,6 @@ call plug#end()
 
 set encoding=UTF-8
 
-
 let g:gruvbox_italic=1
 set termguicolors
 set background=dark
@@ -233,8 +232,6 @@ let g:rustfmt_emit_files = 1
 
 let g:default_julia_version = '1.4.1'
 
-" fzf and rg integration
-" command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 " Tell FZF to use RG - so we can skip .gitignore files even if not using
