@@ -10,19 +10,17 @@ endfunction
 
 set guifont=HackNerdFontMono
 
+
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'junegunn/vim-plug'
 
 Plug 'flazz/vim-colorschemes'
 Plug 'morhetz/gruvbox'
-" TODO Remove this one in favor of something better.
-Plug 'mkitt/tabline.vim'
 
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
-Plug 'mhinz/vim-crates'
-Plug 'derekwyatt/vim-scala'
+" Plug 'derekwyatt/vim-scala'
 
 Plug 'SirVer/ultisnips'
 
@@ -38,6 +36,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 
 call plug#end()
+
+" set pyxversion=python3
 
 set encoding=UTF-8
 
@@ -65,19 +65,23 @@ autocmd BufReadPost *.rs set filetype=rust
 
 " let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache' ] "empty by default
 " let g:nvim_tree_gitignore = 1 "0 by default
-let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
-let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+"
+" let g:nvim_tree_quit_on_open = 1 "0 by default, closes the tree when you open a file
+" let g:nvim_tree_indent_markers = 1 "0 by default, this option shows indent markers when folders are open
+"
 " let g:nvim_tree_hide_dotfiles = 1 "0 by default, this option hides files and folders starting with a dot `.`
 " let g:nvim_tree_git_hl = 1 "0 by default, will enable file highlight for git attributes (can be used without the icons).
 " let g:nvim_tree_highlight_opened_files = 1 "0 by default, will enable folder and file icon highlight for opened files/directories.
 " let g:nvim_tree_root_folder_modifier = ':~' "This is the default. See :help filename-modifiers for more options
-let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
+"
+" let g:nvim_tree_add_trailing = 1 "0 by default, append a trailing slash to folder names
 " let g:nvim_tree_group_empty = 1 " 0 by default, compact folders that only contain a single folder into one node in the file tree
 " let g:nvim_tree_disable_window_picker = 1 "0 by default, will disable the window picker.
 " let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the space between the icon and the filename. Use with caution, it could break rendering if you set an empty string depending on your font.
 " let g:nvim_tree_symlink_arrow = ' >> ' " defaults to ' ➛ '. used as a separator between symlinks' source and target.
 " let g:nvim_tree_respect_buf_cwd = 1 "0 by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
-let g:nvim_tree_create_in_closed_folder = 0 "1 by default, When creating files, sets the path of a file when cursor is on a closed folder to the parent folder when 0, and inside the folder when 1.
+"
+" let g:nvim_tree_create_in_closed_folder = 0 "1 by default, When creating files, sets the path of a file when cursor is on a closed folder to the parent folder when 0, and inside the folder when 1.
 " let g:nvim_tree_refresh_wait = 500 "1000 by default, control how often the tree can be refreshed, 1000 means the tree can be refresh once per 1000ms.
 " let g:nvim_tree_window_picker_exclude = {
 "     \   'filetype': [
@@ -155,11 +159,13 @@ set nowritebackup
 
 set cmdheight=2
 
+" COC
 set updatetime=300
+
 set shortmess+=c
 
-" set signcolumn=yes
-set signcolumn=number
+set signcolumn=yes
+" set signcolumn=number
 
 " Spell checking.
 set spelllang=en
@@ -168,11 +174,27 @@ augroup spellCheck
   autocmd BufReadPost,BufNewFile *.txt,*.md setlocal spell
 augroup END
 
+" Various COC related configurations.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -192,6 +214,8 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (expand('%:t') == 'Cargo.toml')
+    lua require('crates').show_popup()
   else
     call CocActionAsync('doHover')
   endif
@@ -273,8 +297,9 @@ vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 
 " crates.io support.
-if has('nvim')
-  autocmd BufRead Cargo.toml call crates#toggle()
-endif
+" if has('nvim')
+"   autocmd BufRead Cargo.toml call crates#toggle()
+" endif
 
 " set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
