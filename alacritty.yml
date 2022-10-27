@@ -15,6 +15,8 @@ env:
   TERM: xterm-256color
 
 window:
+  # Background opacity
+  opacity: 1.0
   dynamic_title: true
   # Window dimensions in character columns and lines
   # Falls back to size specified by window manager if set to 0x0.
@@ -214,6 +216,38 @@ debug:
 #     cyan:    '0x93a1a1'
 #     white:   '0xfdf6e3'
 
+
+# Nightfox Alacritty Colors
+# Style: nightfox
+# Upstream: https://github.com/edeneast/nightfox.nvim/raw/main/extra/nightfox/nightfox_alacritty.yml
+#colors:
+#  # Default colors
+#  primary:
+#    background: '0x192330'
+#    foreground: '0xcdcecf'
+#  # Normal colors
+#  normal:
+#    black:   '0x393b44'
+#    red:     '0xc94f6d'
+#    green:   '0x81b29a'
+#    yellow:  '0xdbc074'
+#    blue:    '0x719cd6'
+#    magenta: '0x9d79d6'
+#    cyan:    '0x63cdcf'
+#    white:   '0xdfdfe0'
+#  # Bright colors
+#  bright:
+#    black:   '0x575860'
+#    red:     '0xd16983'
+#    green:   '0x8ebaa4'
+#    yellow:  '0xe0c989'
+#    blue:    '0x86abdc'
+#    magenta: '0xbaa1e2'
+#    cyan:    '0x7ad4d6'
+#    white:   '0xe4e4e5'
+#  indexed_colors:
+#    - { index: 16, color: '0xf4a261' }
+#    - { index: 17, color: '0xd67ad2' }
     # Colors (Gruvbox dark)
 colors:
   # Default colors
@@ -298,8 +332,6 @@ bell:
   animation: EaseOutExpo
   duration: 0
 
-# Background opacity
-background_opacity: 1.0
 
 # Mouse bindings
 #
