@@ -1,6 +1,56 @@
 -- nvim_tree_hide_dotfiles
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
+  -- tree-sitter
+  -- use {
+  --   'nvim-treesitter/nvim-treesitter',
+  --   run = ':TSUpdate',
+  --   config = function()
+  --     require'nvim-treesitter.configs'.setup {
+  --       ensure_installed = { 
+  --         "c",
+  --         "rust",
+  --         "yaml",
+  --         "toml",
+  --         "lua",
+  --         "python",
+  --         "javascript",
+  --         "typescript"
+  --       },
+  --       sync_install = false,
+  --       auto_install = true,
+  --       highlight = {
+  --         enable = true,
+  --         additional_vim_regex_highlighting=false,
+  --       },
+  --       -- indent = { enable = true },
+  --       rainbow = {
+  --         enable = true,
+  --         extended_mode = true,
+  --         max_file_lines = nil,
+  --       }
+  --     }
+  --   end
+  -- }
+  -- Color schemes.
+  use 'EdenEast/nightfox.nvim'
+  -- use { "ellisonleao/gruvbox.nvim" }
+  use { 'sainnhe/gruvbox-material' }
+  use { 'morhetz/gruvbox' }
+  use { 'flazz/vim-colorschemes' }
+  use { 'sainnhe/everforest' }
+  use { 'sainnhe/edge' }
+  use { 'luisiacc/gruvbox-baby' }
+
+  -- Languages.
+  use { 'JuliaEditorSupport/julia-vim' }
+  use { 'rust-lang/rust.vim' }
+  use { 'cespare/vim-toml' }
+  --  use { 'derekwyatt/vim-scala' }
+  -- Completion and snips
+  use { 'SirVer/ultisnips' }
+ -- Use release branch
+  use { 'neoclide/coc.nvim', branch = 'release' }
   -- File explorer via nvim-tree.
   use {
       'kyazdani42/nvim-tree.lua',
@@ -187,7 +237,7 @@ return require('packer').startup(function()
     config = function()
       require'lualine'.setup {
       options = {
-        theme = 'gruvbox'
+        theme = 'auto'
       },
       extensions = {
         'nvim-tree',
@@ -248,6 +298,7 @@ return require('packer').startup(function()
   --   requires = { { 'hoob3rt/lualine.nvim', opt=true }, {'kyazdani42/nvim-web-devicons', opt = true} }
   -- }
   -- lua fzf
+  use { 'junegunn/fzf', run = './install --bin', }
   use {
     'ibhagwan/fzf-lua',
     requires = {
